@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
@@ -36,14 +36,28 @@
     position:sticky;top:0;background:#fff;z-index:20;
   }
   .logo{display:flex;gap:10px;align-items:center}
-  .logo svg{width:32px;height:32px}
+  .logo-mark{
+    width:52px;height:52px;
+    border-radius:14px;
+    padding:4px;
+    border:1px solid var(--border);
+    background:#fff;
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .logo-mark img{
+    width:100%;height:100%;
+    object-fit:cover;
+    transform:scale(1.2);
+    transform-origin:center;
+  }
   .logo .title{font-weight:700;letter-spacing:.3px}
   .pill{font-size:12px;padding:2px 8px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
   /* Hero gallery */
   .gallery-wrap{
     width:100%;
     margin:18px 0 10px;
-    overflow:hidden;
+    overflow:visible;
   }
   .gallery{
     --gap:14px; --r-lg:22px; --r-sm:14px;
@@ -51,7 +65,7 @@
     grid-template-columns:
       clamp(280px, 35vw, 440px)
       clamp(140px, 18vw, 210px)
-      clamp(280px, 35vw, 420px);
+      clamp(224px, 28vw, 336px);
     grid-template-rows: clamp(140px, 16vw, 182px) clamp(140px, 16vw, 182px);
     grid-template-areas:
       "a b c"
@@ -74,7 +88,7 @@
   .tile.a{grid-area:a;border-radius:var(--r-lg) 12px 12px var(--r-lg)}
   .tile.b{grid-area:b}
   .tile.d{grid-area:d}
-  .tile.c{grid-area:c;border-radius:12px var(--r-lg) var(--r-lg) 12px}
+  .tile.c{grid-area:c;border-radius:var(--r-lg)}
   .gallery-cta{
     position:absolute;right:16px;bottom:16px;border:0;padding:11px 16px;
     background:#fff;color:#111;border-radius:999px;cursor:pointer;
@@ -86,16 +100,18 @@
   @media(max-width:900px){
     .gallery-wrap{
       overflow-x:auto;
+      overflow-y:hidden;
       touch-action:pan-x;
       -webkit-overflow-scrolling:touch;
       padding-bottom:10px;
       margin:12px 0;
     }
     .gallery{
+      --gap:12px;
       grid-template-columns:
         clamp(240px, 80vw, 360px)
         clamp(150px, 50vw, 220px)
-        clamp(240px, 80vw, 360px);
+        clamp(192px, 64vw, 288px);
       grid-template-rows: clamp(126px, 38vw, 161px) clamp(126px, 38vw, 161px);
       width:max-content;
       gap:12px;
@@ -134,12 +150,119 @@
   .card{
     border:1px solid var(--border);border-radius:14px;padding:14px;background:#fff
   }
-  .packages{display:grid;gap:12px}
-  .pack{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
-  .pack h3{margin:0;font-size:16px}
-  .price{font-weight:800}
-  .add{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
-  .add:hover{background:var(--brand-2)}
+  .packages-grid{
+    display:grid;
+    gap:18px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  }
+  .package-card{
+    position:relative;
+    border-radius:20px;
+    padding:20px;
+    background:linear-gradient(135deg,#ffffff,#f2fff8);
+    border:1px solid rgba(30,145,83,.18);
+    box-shadow:0 16px 32px rgba(15,45,28,.12);
+    overflow:hidden;
+  }
+  .package-card::after{
+    content:"";
+    position:absolute;
+    width:220px;height:220px;
+    top:-80px;right:-60px;
+    background:radial-gradient(circle,rgba(45,189,110,.25),transparent 60%);
+    pointer-events:none;
+  }
+  .package-tag{
+    position:absolute;
+    top:16px;right:16px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:4px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.9);
+    border:1px solid rgba(0,0,0,.05);
+    font-weight:700;
+  }
+  .package-content{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    height:100%;
+  }
+  .package-head{display:flex;flex-direction:column;gap:6px}
+  .package-head h3{margin:0;font-size:18px}
+  .package-duration{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-weight:600;
+    font-size:13px;
+    padding:4px 12px;
+    border-radius:999px;
+    background:rgba(30,145,83,.08);
+    color:var(--brand);
+    border:1px solid rgba(30,145,83,.2);
+    width:fit-content;
+  }
+  .package-perks{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-size:14px;
+  }
+  .package-perks li{
+    display:flex;
+    gap:6px;
+    align-items:flex-start;
+  }
+  .package-perks li::before{
+    content:"-";
+    color:var(--brand);
+    font-weight:700;
+  }
+  .package-perks li.perk-pill{
+    align-items:center;
+    padding:4px 12px;
+    border-radius:999px;
+    background:rgba(30,145,83,.08);
+    border:1px solid rgba(30,145,83,.2);
+    color:var(--brand);
+    font-weight:600;
+    font-size:13px;
+  }
+  .package-perks li.perk-pill::before{
+    content:"🎁";
+    font-size:15px;
+  }
+  .package-foot{
+    margin-top:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .package-price{font-size:24px;font-weight:800;line-height:1}
+  .package-note{font-size:12px;color:var(--muted)}
+  .add{
+    background:var(--brand);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:12px 20px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 10px 24px rgba(30,145,83,.25);
+    transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+  }
+  .add:hover{background:var(--brand-2);box-shadow:0 12px 26px rgba(45,189,110,.32)}
+  .add:active{transform:scale(.97)}
   .muted{color:var(--muted)}
   .grid-2{display:grid;gap:12px}
   @media(min-width:760px){ .grid-2{grid-template-columns:1fr 1fr} }
@@ -165,13 +288,11 @@
 
 <header class="topbar">
   <div class="logo">
-    <!-- Simple leaf mark -->
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <circle cx="12" cy="12" r="10" stroke-width="2"/>
-      <path d="M6 14c6-1 8-5 12-8-1 6-4 10-10 12-1-1-1-3-2-4z" stroke-width="2" fill="currentColor"/>
-    </svg>
+    <span class="logo-mark">
+      <img src="assets/logo.png" alt="Logotipo MassoClin">
+    </span>
     <div class="title">MassoClin</div>
-    <span class="pill">Ibaiti • PR</span>
+    <span class="pill">Ibaiti · PR</span>
   </div>
 </header>
 
@@ -199,7 +320,6 @@
         <span>4.9 · 31 avaliações</span>
       </div>
     </div>
-    <div class="pill">Sem data de expiração</div>
   </div>
 
   <!-- CTA strip -->
@@ -208,68 +328,83 @@
       Reservar pelo WhatsApp
       <span class="paydots">• • •</span>
     </a>
-    <div class="coupon">
-      Get gifting with 15% off today!
-      <small>Use o código: <strong>XMAS15</strong></small>
-    </div>
-    <div class="coupon secondary">
-      Ou 20% off via e-mail
-      <small><em>Inscreva-se e receba o cupom</em></small>
-    </div>
   </div>
 
   <!-- About -->
   <section>
     <h2>Sobre esta experiência</h2>
-    <p>Rejuvenesça mente, corpo e alma com rituais relaxantes e toques terapêuticos na <strong>MassoClin – Massoterapia e Yoga</strong>.</p>
-    <div class="icons" aria-label="benefícios">
-      <div class="iconchip">🗓️ Sem expiração</div>
-      <div class="iconchip">📍 Ibaiti, PR</div>
-      <div class="iconchip">🔁 Agendamento flexível</div>
-      <div class="iconchip">🔄 Trocas gratuitas</div>
-      <div class="iconchip">📩 Entrega instantânea (voucher)</div>
-    </div>
+    <p>Rejuvenesça mente, corpo e alma com rituais relaxantes e toques terapêuticos na <strong>MassoClin - Massoterapia e Yoga</strong>.</p>
   </section>
 
   <!-- Packages -->
   <section>
     <h2>Pacotes</h2>
-    <div class="card packages" id="packs">
-      <!-- Relax -->
-      <div class="pack">
-        <div>
-          <h3>🪷 Opção Relax <span class="muted">· 1h</span></h3>
-          <div class="muted">Escalda-pés com ervas • Degustação (15min) • Massagem Crânio Facial e Relaxante Corporal (45min)</div>
+    <p class="muted">Três formatos de cuidado para presentear ou se presentear, cada um entregue como um cartão digital elegante.</p>
+    <div class="packages-grid" id="packs">
+      <article class="package-card">
+        <span class="package-tag">Essencial</span>
+        <div class="package-content">
+          <div class="package-head">
+            <span class="package-duration">1h de cuidado</span>
+            <h3>Opção Relax</h3>
+            <p class="muted">Pausa rápida com toque terapêutico completo.</p>
+          </div>
+          <ul class="package-perks">
+            <li>Escalda-pés com ervas aromáticas</li>
+            <li>Degustação acolhedora - 15 min</li>
+            <li>Massagem crânio-facial + relaxante corporal - 45 min</li>
+          </ul>
+          <div class="package-foot">
+            <div>
+              <div class="package-price">R$ 120,00</div>
+            </div>
+            <button class="add" data-pack="Opção Relax" data-price="R$ 120,00">Escolher</button>
+          </div>
         </div>
-        <div>
-          <div class="price">R$ 120,00</div>
-          <button class="add" data-pack="Opção Relax" data-price="R$ 120,00">Add to Cart</button>
+      </article>
+      <article class="package-card">
+        <span class="package-tag">Mais pedido</span>
+        <div class="package-content">
+          <div class="package-head">
+            <span class="package-duration">1h30 de cuidado</span>
+            <h3>Opção Premium</h3>
+            <p class="muted">Ritual completo para desacelerar corpo e mente.</p>
+          </div>
+          <ul class="package-perks">
+            <li>Escalda-pés com ervas especiais</li>
+            <li>Degustação sensorial - 20 min</li>
+            <li>Massagem crânio-facial + relaxante corporal - 70 min</li>
+          </ul>
+          <div class="package-foot">
+            <div>
+              <div class="package-price">R$ 170,00</div>
+            </div>
+            <button class="add" data-pack="Opção Premium" data-price="R$ 170,00">Reservar</button>
+          </div>
         </div>
-      </div>
-      <hr style="border:none;border-top:1px solid var(--border)">
-      <!-- Premium -->
-      <div class="pack">
-        <div>
-          <h3>🌿 Opção Premium <span class="muted">· 1h30</span></h3>
-          <div class="muted">Escalda-pés com ervas • Degustação (20min) • Massagem Crânio Facial e Relaxante Corporal (70min)</div>
+      </article>
+      <article class="package-card">
+        <span class="package-tag">Luxo</span>
+        <div class="package-content">
+          <div class="package-head">
+            <span class="package-duration">2h de cuidado</span>
+            <h3>Opção Deluxe</h3>
+            <p class="muted">Dois momentos de massagem e mimo final exclusivo.</p>
+          </div>
+          <ul class="package-perks">
+            <li>Escalda-pés com ervas e sais minerais</li>
+            <li>Degustação autoral - 20 min</li>
+            <li>Massagem crânio-facial + relaxante corporal - 100 min</li>
+            <li class="perk-pill">Mimo surpresa pós-tratamento</li>
+          </ul>
+          <div class="package-foot">
+            <div>
+              <div class="package-price">R$ 220,00</div>
+            </div>
+            <button class="add" data-pack="Opção Deluxe" data-price="R$ 220,00">Quero este</button>
+          </div>
         </div>
-        <div>
-          <div class="price">R$ 170,00</div>
-          <button class="add" data-pack="Opção Premium" data-price="R$ 170,00">Add to Cart</button>
-        </div>
-      </div>
-      <hr style="border:none;border-top:1px solid var(--border)">
-      <!-- Deluxe -->
-      <div class="pack">
-        <div>
-          <h3>🌸 Opção Deluxe <span class="muted">· 2h</span></h3>
-          <div class="muted">Escalda-pés com ervas • Degustação (20min) • Massagem Crânio Facial e Relaxante Corporal (100min) • 🎁 Mimo especial</div>
-        </div>
-        <div>
-          <div class="price">R$ 220,00</div>
-          <button class="add" data-pack="Opção Deluxe" data-price="R$ 220,00">Add to Cart</button>
-        </div>
-      </div>
+      </article>
     </div>
   </section>
 
